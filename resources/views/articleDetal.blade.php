@@ -1,40 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <table border="1">
-        @if ($articale->count()>0)
-        <tr>
-            <th>contenu</th>
-            <th>titre  </th>
-            <th>date</th>
-            <th colspan="3">Action</th>
-        </tr>
-    
-    
-    @foreach ($articale as $articale)
-    <tr>
-        <td>{{$articale->contenu}}</td>
-        <td>{{$articale->titre  }}</td>
-        <td>{{$articale->date}}</td>
-        <td><button><a href="">Add</a></button></td>
-        <td><button><a href="">delet</a></button></td>
-        <td><button><a href="">update</a></button></td>
-        
-    </tr>
-    @endforeach
-        
-    @endif
-</table>
-</body>
-</html> --}}
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +9,31 @@
             font-family: 'Segoe UI', sans-serif;
             background: #f2f5f7;
             padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .add-new {
+            background-color: #27ae60;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .add-new:hover {
+            background-color: #219a52;
         }
 
         table {
@@ -74,64 +62,90 @@
             background-color: #f0f8ff;
         }
 
-        a {
-            text-decoration: none;
-            color: white;
+        .actions {
+            display: flex;
+            gap: 5px;
+            justify-content: center;
         }
 
-        button {
+        .btn {
             padding: 8px 16px;
-            margin: 0 2px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
             transition: 0.3s;
+            color: white;
+            text-decoration: none;
         }
 
-        button:hover {
+        .btn:hover {
             transform: scale(1.05);
         }
 
-        button a {
-            display: block;
+        .btn-edit {
+            background-color: #2980b9;
         }
 
-        button:nth-child(1) {
-            background-color: #27ae60;
-        }
-
-        button:nth-child(2) {
+        .btn-delete {
             background-color: #e74c3c;
         }
 
-        button:nth-child(3) {
-            background-color: #2980b9;
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
     </style>
 </head>
 <body>
+    <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
 
-<table>
-    @if ($articale->count() > 0)
-        <tr>
-            <th>Contenu</th>
-            <th>Titre</th>
-            <th>Date</th>
-            <th colspan="3">Actions</th>
-        </tr>
-        @foreach ($articale as $articale)
-        <tr>
-            <td>{{ $articale->contenu }}</td>
-            <td>{{ $articale->titre }}</td>
-            <td>{{ $articale->date }}</td>
-            <td><button><a href="/Article/create">Add</a></button></td>
-            <td><button><a href="/show/{{$articale->id}}">Delete</a></button></td>
-            <td><button><a href="#">Update</a></button></td>
-        </tr>
-        @endforeach
-    @endif
-</table>
+        <div class="header">
+            <h1>Liste des Articles</h1>
+            <a href="{{ route('articles.create') }}" class="add-new">Ajouter un Article</a>
+        </div>
 
+        <table>
+            @if ($articale->count() > 0)
+                <tr>
+                    <th>Contenu</th>
+                    <th>Titre</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach ($articale as $article)
+                <tr>
+                    <td>{{ $article->contenu }}</td>
+                    <td>{{ $article->titre }}</td>
+                    <td>{{ $article->date }}</td>
+                    <td class="actions">
+                        <a href="{{ route('articles.edit', $article->id) }}" class="btn btn-edit">Modifier</a>
+                        <form action="{{ route('articles.destroy', $article->id) }}" method="POST" style="display: inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-delete" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet article ?')">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            @else
+                <tr>
+                    <td colspan="4" style="text-align: center;">Aucun article trouvé</td>
+                </tr>
+            @endif
+        </table>
+    </div>
 </body>
 </html>

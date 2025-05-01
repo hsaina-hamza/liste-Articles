@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ajouter Article</title>
+    <title>Modifier Article</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -36,7 +36,7 @@
         }
 
         button {
-            background-color: #27ae60;
+            background-color: #2980b9;
             color: white;
             padding: 10px 20px;
             border: none;
@@ -45,7 +45,7 @@
         }
 
         button:hover {
-            background-color: #219a52;
+            background-color: #2471a3;
         }
 
         .alert {
@@ -84,26 +84,27 @@
         </div>
     @endif
 
-    <form action="{{ route('articles.store') }}" method="POST">
+    <form action="{{ route('articles.update', $article->id) }}" method="POST">
         @csrf
+        @method('PUT')
 
         <div>
             <label for="date">Date:</label>
-            <input type="date" name="date" value="{{ old('date') }}" required>
+            <input type="date" name="date" value="{{ $article->date }}" required>
         </div>
 
         <div>
             <label for="titre">Titre:</label>
-            <input type="text" name="titre" value="{{ old('titre') }}" required>
+            <input type="text" name="titre" value="{{ $article->titre }}" required>
         </div>
 
         <div>
             <label for="content">Contenu:</label>
-            <input type="text" name="content" value="{{ old('content') }}" required>
+            <input type="text" name="content" value="{{ $article->contenu }}" required>
         </div>
 
         <div>
-            <button type="submit">Ajouter</button>
+            <button type="submit">Mettre à jour</button>
         </div>
     </form>
 </body>

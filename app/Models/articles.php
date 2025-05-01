@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class articles extends Model
 {
     //
+    protected $fillable = ["content","titre","date"];
 }
