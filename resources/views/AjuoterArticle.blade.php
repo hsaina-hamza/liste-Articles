@@ -1,110 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ajouter Article</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
-            padding: 30px;
-        }
-
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            margin: auto;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-
-        input[type="text"],
-        input[type="date"] {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-
-        button {
-            background-color: #27ae60;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #219a52;
-        }
-
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 6px;
-        }
-
-        .alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
+        body { padding: 20px; }
+        form { max-width: 500px; margin: auto; }
+        input { width: 100%; padding: 8px; margin: 10px 0; }
+        button { 
+            background: #4CAF50; 
+            color: white; 
+            padding: 10px 20px; 
+            border: none; 
+            cursor: pointer; 
         }
     </style>
 </head>
 <body>
-    @if(session('success'))
-        <div class="alert alert-success">
-            {{ session('success') }}
-        </div>
-    @endif
-
-    @if($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
-
-    <form action="{{ route('articles.store') }}" method="POST">
+    <form action="/articles" method="POST">
         @csrf
+        <h2>Ajouter un Article</h2>
 
         <div>
-            <label for="date">Date:</label>
-            <input type="date" name="date" value="{{ old('date') }}" required>
+            <label>Date:</label>
+            <input type="date" name="date">
         </div>
 
         <div>
-            <label for="titre">Titre:</label>
-            <input type="text" name="titre" value="{{ old('titre') }}" required>
+            <label>Titre:</label>
+            <input type="text" name="titre">
         </div>
 
         <div>
-            <label for="content">Contenu:</label>
-            <input type="text" name="content" value="{{ old('content') }}" required>
+            <label>Contenu:</label>
+            <input type="text" name="content">
         </div>
 
-        <div>
-            <button type="submit">Ajouter</button>
-        </div>
+        <button type="submit">Ajouter</button>
     </form>
 </body>
 </html>

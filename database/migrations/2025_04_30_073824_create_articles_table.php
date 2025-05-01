@@ -6,25 +6,19 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
+    public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->date('date');
+            $table->text('contenu');
             $table->string('titre');
-            $table->string('contenu');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->date('date');
+            $table->unsignedBigInteger('user_id')->nullable(); // Making user_id nullable
             $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
+    public function down()
     {
         Schema::dropIfExists('articles');
     }

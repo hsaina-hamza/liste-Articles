@@ -2,61 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\articles;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $articale = articles::all();
-        return view('articleDetal',compact("articale"));
+        return view('articleDetal', compact("articale"));
     }
 
-    public function show($id){
-        $articale = articles::find($id);
-        return view('article',compact("articale"));
-    }
-
-    public function create(){
+    public function create()
+    {
         return view('AjuoterArticle');
     }
 
-    public function store(Request $request){
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'titre' => 'required|string',
-            'date' => 'required|date',
-        ]);
+    public function store(Request $request)
+    {
+        $article = new articles();
+        $article->contenu = $request->content;
+        $article->titre = $request->titre;
+        $article->date = $request->date;
+        $article->save();
 
-        $validated['user_id'] = Auth::id();
-
-        articles::create($validated);
-        return redirect()->route('articles.index')->with('success', 'Article ajouté avec succès');
+        return redirect('/articles');
     }
 
-    public function edit($id){
-        $article = articles::findOrFail($id);
+    public function edit($id)
+    {
+        $article = articles::find($id);
         return view('edit', compact('article'));
     }
 
-    public function update(Request $request, $id){
-        $article = articles::findOrFail($id);
-        
-        $validated = $request->validate([
-            'content' => 'required|string',
-            'titre' => 'required|string',
-            'date' => 'required|date',
-        ]);
+    public function update(Request $request, $id)
+    {
+        $article = articles::find($id);
+        $article->contenu = $request->content;
+        $article->titre = $request->titre;
+        $article->date = $request->date;
+        $article->save();
 
-        $article->update($validated);
-        return redirect()->route('articles.index')->with('success', 'Article mis à jour avec succès');
+        return redirect('/articles');
     }
 
-    public function destroy($id){
-        $article = articles::findOrFail($id);
+    public function destroy($id)
+    {
+        $article = articles::find($id);
         $article->delete();
-        return redirect()->route('articles.index')->with('success', 'Article supprimé avec succès');
+        return redirect('/articles');
     }
 }
