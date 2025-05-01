@@ -21,7 +21,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/Article/create',[ArticleController::class,"create"]);
-Route::get('/Articl',[ArticleController::class,"store"])->name("store");
+Route::post('/Articl',[ArticleController::class,"store"])->name("store");
 
 Route::get('/articleDetal',[ArticleController::class,'index']);
 Route::get('/show/{id}',[ArticleController::class,'show']);

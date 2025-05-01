@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\articles;
 use Illuminate\Http\Request;
+use Illuminate\Mail\Mailables\Content;
 
 class ArticleController extends Controller
 {
@@ -24,7 +25,13 @@ class ArticleController extends Controller
         return view('AjuoterArticle');
     }
     public function store(Request $request){
-
+        $validated = $request->validate([
+            "Content"=>'required|string',
+            "titre"=>'required|string',
+            "date"=>'required|date',
+        ]);
+        articles::create($validated);
+        return redirect()->route('store');
 
     }
 

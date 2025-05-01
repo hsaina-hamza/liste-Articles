@@ -88,7 +88,8 @@
 </head>
 
 <body>
-    <form action="{{ route('store')}}" method="POST">
+    <form action="{{ route('store')}}"  method="POST"
+    >
         @csrf
 
         <div>
@@ -107,7 +108,7 @@
         </div>
 
         <div>
-            <button type="submit"><a href="">Ajouter</a></button>
+            <button type="submit"><a href="{{ route('store') }}">Ajouter</a></button>
         </div>
     </form>
 </body>
