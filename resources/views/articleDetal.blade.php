@@ -125,7 +125,7 @@
             <td>{{ $articale->contenu }}</td>
             <td>{{ $articale->titre }}</td>
             <td>{{ $articale->date }}</td>
-            <td><button><a href="#">Add</a></button></td>
+            <td><button><a href="/Article/create">Add</a></button></td>
             <td><button><a href="/show/{{$articale->id}}">Delete</a></button></td>
             <td><button><a href="#">Update</a></button></td>
         </tr>

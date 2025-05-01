@@ -20,6 +20,9 @@ class ArticleController extends Controller
         //     'article'=>$articale,
         // ]);
     }
+    public function create(){
+        return view('AjuoterArticle');
+    }
     public function store(Request $request){
 
 
